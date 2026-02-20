@@ -13,6 +13,23 @@ export class SessionInitializerService {
   private readonly authStore = inject(AuthStore);
   private readonly schoolsService = inject(SchoolsService);
   private readonly schoolContextStore = inject(SchoolContextStore);
+  private initializationPromise: Promise<void> | null = null;
+  private initialized = false;
+
+  ensureInitialized(): Promise<void> {
+    if (this.initialized) {
+      return Promise.resolve();
+    }
+
+    if (!this.initializationPromise) {
+      this.initializationPromise = this.initialize().finally(() => {
+        this.initialized = true;
+        this.initializationPromise = null;
+      });
+    }
+
+    return this.initializationPromise;
+  }
 
   async initialize(): Promise<void> {
     this.authStore.setLoading();
