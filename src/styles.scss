@@ -1,6 +1,69 @@
 @use 'sass:meta';
 @include meta.load-css('tailwindcss');
 @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@200;300;400;500;600;700&family=PT+Serif:wght@400;700&display=swap');
+
+@theme {
+  --color-secondary: #f4f2ed;
+  --font-pt-serif: 'PT Serif', serif;
+  --font-montserrat: 'Montserrat', sans-serif;
+  --background-image-underline1: url('/dist/assets/Underline1.svg');
+  --background-image-underline2: url('/dist/assets/Underline2.svg');
+  --background-image-underline3: url('/dist/assets/Underline3.svg');
+  --background-image-underline4: url('/dist/assets/Underline4.svg');
+  --background-image-highlight3: url('/dist/assets/Highlight3.svg');
+  --background-size-100: 100%;
+  --animate-fade-in-down: fade-in-down 0.5s ease-out;
+}
+
+@keyframes fade-in-down {
+  0% {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@layer components {
+  .sectionSize {
+    @apply flex flex-col items-center px-4 py-14 md:px-12 lg:px-48;
+  }
+
+  .secondaryTitle {
+    @apply mb-8 bg-left-bottom bg-no-repeat px-16 pb-8 font-pt-serif text-3xl;
+  }
+}
+
+.growing-underline {
+  display: block;
+  position: relative;
+  overflow: hidden;
+  padding: 0.2em 0;
+}
+
+.growing-underline::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  height: 0.1em;
+  width: 100%;
+  background-color: black;
+  opacity: 1;
+  transform: translate3d(-100%, 0, 0);
+  transition:
+    opacity 300ms,
+    transform 300ms;
+}
+
+.growing-underline:hover::after,
+.growing-underline:focus::after {
+  transform: translate3d(0, 0, 0);
+}
 
 :root {
   color-scheme: light;

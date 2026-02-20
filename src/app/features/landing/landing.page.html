@@ -1,0 +1,241 @@
+<nav class="fixed z-10 flex w-full content-center justify-between bg-secondary px-4 py-6 md:px-12 lg:px-48">
+  <div class="flex items-center">
+    <img src="/dist/assets/Logo_black.svg" alt="Logo" class="h-4" />
+  </div>
+  <ul class="hidden items-center font-montserrat md:flex">
+    <li class="mx-3"><a class="growing-underline" href="#how-it-works">How it works</a></li>
+    <li class="mx-3"><a class="growing-underline" href="#features">Features</a></li>
+    <li class="mx-3"><a class="growing-underline" href="#pricing">Pricing</a></li>
+  </ul>
+  <div class="hidden font-montserrat md:block">
+    <button class="mr-6" type="button" routerLink="/auth/login">Login</button>
+    <button class="rounded-3xl bg-black px-4 py-2 text-white" type="button">Signup</button>
+  </div>
+  <button id="showMenu" class="md:hidden" type="button" (click)="openMobileMenu()">
+    <img src="/dist/assets/logos/Menu.svg" alt="Menu icon" />
+  </button>
+</nav>
+
+<div
+  id="mobileNav"
+  class="animate-fade-in-down fixed left-0 top-0 z-20 h-full w-full bg-secondary px-4 py-6"
+  [class.hidden]="!isMobileMenuOpen"
+>
+  <div id="hideMenu" class="flex justify-end">
+    <button type="button" (click)="closeMobileMenu()">
+      <img src="/dist/assets/logos/Cross.svg" alt="Close menu" class="h-16 w-16" />
+    </button>
+  </div>
+  <ul class="mx-8 my-24 flex flex-col items-center font-montserrat text-3xl">
+    <li class="my-6"><a href="#how-it-works" (click)="closeMobileMenu()">How it works</a></li>
+    <li class="my-6"><a href="#features" (click)="closeMobileMenu()">Features</a></li>
+    <li class="my-6"><a href="#pricing" (click)="closeMobileMenu()">Pricing</a></li>
+    <li class="my-6"><button type="button" routerLink="/auth/login" (click)="closeMobileMenu()">Login</button></li>
+  </ul>
+</div>
+
+<section
+  class="flex flex-col justify-center bg-secondary px-4 pt-24 text-center md:mt-0 md:h-screen md:flex-row md:items-center md:justify-between md:px-12 md:text-left lg:px-48"
+>
+  <div class="md:mr-10 md:flex-1">
+    <h1 class="mb-7 font-pt-serif text-5xl font-bold">
+      A headline for your
+      <span class="bg-underline1 bg-left-bottom bg-no-repeat pb-2 bg-100%">cool website</span>
+    </h1>
+    <p class="mb-7 font-pt-serif font-normal">
+      Lorem ipsum dolor sit amet consectetur adipisicing elit. Laborum harum tempore consectetur
+      voluptas, cumque nobis laboriosam voluptatem.
+    </p>
+    <div class="font-montserrat">
+      <button
+        class="mb-2 mr-2 rounded-lg border-2 border-black border-solid bg-black px-6 py-4 text-white"
+        type="button"
+        routerLink="/auth/login"
+      >
+        Login
+      </button>
+      <button class="rounded-lg border-2 border-black border-solid px-6 py-4" type="button">
+        Secondary action
+      </button>
+    </div>
+  </div>
+  <div class="mt-8 flex justify-around md:mt-0 md:block md:flex-1">
+    <div class="relative">
+      <img src="/dist/assets/Highlight1.svg" alt="" class="absolute -left-10 -top-16" />
+    </div>
+    <img src="/dist/assets/MacBook Pro.png" alt="Macbook" />
+    <div class="relative">
+      <img src="/dist/assets/Highlight2.svg" alt="" class="absolute -bottom-10 -right-6" />
+    </div>
+  </div>
+</section>
+
+<section id="how-it-works" class="sectionSize bg-black text-white">
+  <div><h2 class="secondaryTitle bg-underline2 bg-100%">How it works</h2></div>
+  <div class="flex flex-col md:flex-row">
+    <div class="mx-8 my-4 flex flex-1 flex-col items-center">
+      <div class="mb-3 flex h-12 w-12 items-center justify-center rounded-full border-2 bg-secondary text-black">
+        1
+      </div>
+      <h3 class="mb-2 font-montserrat text-xl font-medium">Eat</h3>
+      <p class="text-center font-montserrat">Lorem ipsum dolor, sit amet consectetur adipisicing elit.</p>
+    </div>
+    <div class="mx-8 my-4 flex flex-1 flex-col items-center">
+      <div class="mb-3 flex h-12 w-12 items-center justify-center rounded-full border-2 bg-secondary text-black">
+        2
+      </div>
+      <h3 class="mb-2 font-montserrat text-xl font-medium">Sleep</h3>
+      <p class="text-center font-montserrat">Lorem ipsum dolor, sit amet consectetur adipisicing elit.</p>
+    </div>
+    <div class="mx-8 my-4 flex flex-1 flex-col items-center">
+      <div class="mb-3 flex h-12 w-12 items-center justify-center rounded-full border-2 bg-secondary text-black">
+        3
+      </div>
+      <h3 class="mb-2 font-montserrat text-xl font-medium">Rave</h3>
+      <p class="text-center font-montserrat">Lorem ipsum dolor, sit amet consectetur adipisicing elit.</p>
+    </div>
+  </div>
+</section>
+
+<section id="features" class="sectionSize bg-secondary">
+  <div><h2 class="secondaryTitle bg-underline3 bg-100%">Features</h2></div>
+  <div class="md:grid md:grid-cols-2 md:grid-rows-2">
+    <div class="my-6 mr-10 flex items-start font-montserrat">
+      <img src="/dist/assets/logos/Heart.svg" alt="" class="mr-4 h-7" />
+      <div>
+        <h3 class="text-2xl font-semibold">Feature #1</h3>
+        <p>
+          Lorem ipsum dolor sit amet consectetur, adipisicing elit. Quisquam voluptate praesentium
+          tenetur earum repellendus.
+        </p>
+      </div>
+    </div>
+    <div class="my-6 mr-10 flex items-start font-montserrat">
+      <img src="/dist/assets/logos/Heart.svg" alt="" class="mr-4 h-7" />
+      <div>
+        <h3 class="text-2xl font-semibold">Feature #2</h3>
+        <p>
+          Lorem ipsum dolor sit amet consectetur, adipisicing elit. Quisquam voluptate praesentium
+          tenetur earum repellendus.
+        </p>
+      </div>
+    </div>
+    <div class="my-6 mr-10 flex items-start font-montserrat">
+      <img src="/dist/assets/logos/Heart.svg" alt="" class="mr-4 h-7" />
+      <div>
+        <h3 class="text-2xl font-semibold">Feature #3</h3>
+        <p>
+          Lorem ipsum dolor sit amet consectetur, adipisicing elit. Quisquam voluptate praesentium
+          tenetur earum repellendus.
+        </p>
+      </div>
+    </div>
+    <div class="my-6 mr-10 flex items-start font-montserrat">
+      <img src="/dist/assets/logos/Heart.svg" alt="" class="mr-4 h-7" />
+      <div>
+        <h3 class="text-2xl font-semibold">Feature #4</h3>
+        <p>
+          Lorem ipsum dolor sit amet consectetur, adipisicing elit. Quisquam voluptate praesentium
+          tenetur earum repellendus.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="pricing" class="sectionSize bg-secondary py-0">
+  <div><h2 class="secondaryTitle mb-0 bg-underline4 bg-100%">Pricing</h2></div>
+  <div class="flex w-full flex-col md:flex-row">
+    <div class="relative my-8 mx-6 flex flex-1 flex-col rounded-2xl bg-secondary px-8 py-5 shadow-2xl md:top-24">
+      <h3 class="mb-4 font-pt-serif text-2xl font-normal">The Good</h3>
+      <div class="mb-4 font-montserrat text-2xl font-bold">$25 <span class="text-base font-normal">/ month</span></div>
+      <div class="flex"><img src="/dist/assets/logos/CheckedBox.svg" alt="" class="mr-1" /><p>Benefit #1</p></div>
+      <div class="flex"><img src="/dist/assets/logos/CheckedBox.svg" alt="" class="mr-1" /><p>Benefit #2</p></div>
+      <div class="flex"><img src="/dist/assets/logos/CheckedBox.svg" alt="" class="mr-1" /><p>Benefit #3</p></div>
+      <button class="mt-4 rounded-xl border-2 border-black border-solid py-3 text-lg" type="button">Choose plan</button>
+    </div>
+    <div class="relative my-8 mx-6 flex flex-1 flex-col rounded-2xl bg-secondary px-8 py-5 shadow-2xl md:top-12">
+      <h3 class="mb-4 font-pt-serif text-2xl font-normal">The Bad</h3>
+      <div class="mb-4 font-montserrat text-2xl font-bold">$40 <span class="text-base font-normal">/ month</span></div>
+      <div class="flex"><img src="/dist/assets/logos/CheckedBox.svg" alt="" class="mr-1" /><p>Benefit #1</p></div>
+      <div class="flex"><img src="/dist/assets/logos/CheckedBox.svg" alt="" class="mr-1" /><p>Benefit #2</p></div>
+      <div class="flex"><img src="/dist/assets/logos/CheckedBox.svg" alt="" class="mr-1" /><p>Benefit #3</p></div>
+      <button class="mt-4 rounded-xl border-2 border-black border-solid py-3 text-lg" type="button">Choose plan</button>
+    </div>
+    <div class="relative my-8 mx-6 flex flex-1 flex-col rounded-2xl bg-secondary px-8 py-5 shadow-2xl md:top-24">
+      <h3 class="mb-4 font-pt-serif text-2xl font-normal">The Ugly</h3>
+      <div class="mb-4 font-montserrat text-2xl font-bold">$50 <span class="text-base font-normal">/ month</span></div>
+      <div class="flex"><img src="/dist/assets/logos/CheckedBox.svg" alt="" class="mr-1" /><p>Benefit #1</p></div>
+      <div class="flex"><img src="/dist/assets/logos/CheckedBox.svg" alt="" class="mr-1" /><p>Benefit #2</p></div>
+      <div class="flex"><img src="/dist/assets/logos/CheckedBox.svg" alt="" class="mr-1" /><p>Benefit #3</p></div>
+      <button class="mt-4 rounded-xl border-2 border-black border-solid py-3 text-lg" type="button">Choose plan</button>
+    </div>
+  </div>
+</section>
+
+<section class="sectionSize items-start bg-black pt-8 text-white md:pt-36">
+  <div>
+    <h2 class="secondaryTitle mb-0 bg-highlight3 bg-center bg-100 p-10">FAQ</h2>
+  </div>
+
+  <div class="w-full py-4">
+    <button class="flex w-full items-center justify-between" type="button" (click)="toggleFaq(0)">
+      <span class="mr-auto font-montserrat font-medium">Where can I get this HTML template?</span>
+      <img
+        src="/dist/assets/logos/CaretRight.svg"
+        alt=""
+        class="transition-transform"
+        [class.rotate-90]="openFaqIndex === 0"
+      />
+    </button>
+    <div class="pb-8 font-montserrat text-sm font-extralight" [class.hidden]="openFaqIndex !== 0">
+      You can download it on Gumroad.com
+    </div>
+  </div>
+  <hr class="w-full bg-white" />
+
+  <div class="w-full py-4">
+    <button class="flex w-full items-center justify-between" type="button" (click)="toggleFaq(1)">
+      <span class="mr-auto font-montserrat font-medium">Is this HTML template free?</span>
+      <img
+        src="/dist/assets/logos/CaretRight.svg"
+        alt=""
+        class="transition-transform"
+        [class.rotate-90]="openFaqIndex === 1"
+      />
+    </button>
+    <div class="pb-8 font-montserrat text-sm font-extralight" [class.hidden]="openFaqIndex !== 1">
+      Yes! For you it is free.
+    </div>
+  </div>
+  <hr class="w-full bg-white" />
+
+  <div class="w-full py-4">
+    <button class="flex w-full items-center justify-between" type="button" (click)="toggleFaq(2)">
+      <span class="mr-auto font-montserrat font-medium">Am I awesome?</span>
+      <img
+        src="/dist/assets/logos/CaretRight.svg"
+        alt=""
+        class="transition-transform"
+        [class.rotate-90]="openFaqIndex === 2"
+      />
+    </button>
+    <div class="pb-8 font-montserrat text-sm font-extralight" [class.hidden]="openFaqIndex !== 2">
+      Yes! No doubt about it.
+    </div>
+  </div>
+  <hr class="w-full bg-white" />
+</section>
+
+<section class="sectionSize bg-black">
+  <div class="mb-4">
+    <img src="/dist/assets/Logo_white.svg" alt="Logo" class="h-4" />
+  </div>
+  <div class="mb-8 flex">
+    <a href="#"><img src="/dist/assets/logos/Facebook.svg" alt="Facebook logo" class="mx-4" /></a>
+    <a href="#"><img src="/dist/assets/logos/Youtube.svg" alt="Youtube logo" class="mx-4" /></a>
+    <a href="#"><img src="/dist/assets/logos/Instagram.svg" alt="Instagram logo" class="mx-4" /></a>
+    <a href="#"><img src="/dist/assets/logos/Twitter.svg" alt="Twitter logo" class="mx-4" /></a>
+  </div>
+  <div class="text-sm text-white font-montserrat">© 2021 STARTUP. All rights reserved</div>
+</section>

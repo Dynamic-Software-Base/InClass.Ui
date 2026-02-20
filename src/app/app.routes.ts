@@ -5,16 +5,21 @@ import { LoginPageComponent } from './features/auth/login.page';
 import { MembersPageComponent } from './features/members/members.page';
 import { InvitationPageComponent } from './features/invitation/invitation.page';
 import { AppShellLayoutComponent } from './features/layout/app-shell-layout.component';
+import { LandingPageComponent } from './features/landing/landing.page';
 
 export const routes: Routes = [
   {
     path: '',
-    pathMatch: 'full',
-    redirectTo: 'app/dashboard'
+    component: LandingPageComponent
+  },
+  {
+    path: 'auth/login',
+    component: LoginPageComponent
   },
   {
     path: 'login',
-    component: LoginPageComponent
+    pathMatch: 'full',
+    redirectTo: 'auth/login'
   },
   {
     path: 'invitation/:token',
@@ -43,6 +48,6 @@ export const routes: Routes = [
   },
   {
     path: '**',
-    redirectTo: 'app/dashboard'
+    redirectTo: ''
   }
 ];

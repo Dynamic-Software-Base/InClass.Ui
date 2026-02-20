@@ -34,10 +34,10 @@ export const credentialsInterceptor: HttpInterceptorFn = (req, next) => {
 
       if (error instanceof HttpErrorResponse && error.status === 401) {
         const isAuthMeCall = clonedReq.url.includes('/auth/me');
-        const isOnLoginRoute = router.url.startsWith('/login');
+        const isOnLoginRoute = router.url.startsWith('/auth/login');
 
         if (!isAuthMeCall && !isOnLoginRoute) {
-          void router.navigate(['/login'], {
+          void router.navigate(['/auth/login'], {
             queryParams: { returnUrl: router.url }
           });
         }
