@@ -7,7 +7,7 @@
   },
   "newProjectRoot": "projects",
   "projects": {
-    "untitled10": {
+    "InClassUi": {
       "projectType": "application",
       "schematics": {},
       "root": "",
@@ -63,10 +63,10 @@
           "builder": "@angular/build:dev-server",
           "configurations": {
             "production": {
-              "buildTarget": "untitled10:build:production"
+              "buildTarget": "InClassUi:build:production"
             },
             "development": {
-              "buildTarget": "untitled10:build:development"
+              "buildTarget": "InClassUi:build:development"
             }
           },
           "defaultConfiguration": "development"
