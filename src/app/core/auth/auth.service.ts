@@ -1,0 +1,47 @@
+import { DOCUMENT } from '@angular/common';
+import { HttpClient } from '@angular/common/http';
+import { inject, Injectable } from '@angular/core';
+import { map, Observable } from 'rxjs';
+import { ApiUrlBuilder } from '../http/api-url.builder';
+import { AuthUser } from './auth.models';
+
+interface RawAuthMeResponse {
+  id?: string;
+  sub?: string;
+  email?: string;
+  name?: string;
+  fullName?: string;
+  roles?: string[];
+}
+
+@Injectable({
+  providedIn: 'root'
+})
+export class AuthService {
+  private readonly http = inject(HttpClient);
+  private readonly apiUrl = inject(ApiUrlBuilder);
+  private readonly document = inject(DOCUMENT);
+
+  me(): Observable<AuthUser> {
+    return this.http.get<RawAuthMeResponse>(this.apiUrl.build('/auth/me')).pipe(
+      map((response) => ({
+        id: response.id ?? response.sub ?? '',
+        email: response.email ?? '',
+        name: response.name ?? response.fullName ?? response.email ?? 'User',
+        roles: response.roles ?? []
+      }))
+    );
+  }
+
+  login(): void {
+    const returnUrl = this.document.location.href;
+    this.document.location.href =
+      this.apiUrl.build(`/auth/login?returnUrl=${encodeURIComponent(returnUrl)}`);
+  }
+
+  logout(): void {
+    this.http.post(this.apiUrl.build('/auth/logout'), {}, { withCredentials: true })
+      .subscribe(() => this.document.location.href = '/');
+  }
+
+}
