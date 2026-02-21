@@ -1,9 +1,9 @@
 import { DOCUMENT } from '@angular/common';
-import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { map, Observable } from 'rxjs';
 import { ApiUrlBuilder } from '../http/api-url.builder';
 import { AuthUser } from './auth.models';
+import { HttpClient } from '@angular/common/http';
 
 interface RawAuthMeResponse {
   id?: string;
@@ -43,8 +43,12 @@ export class AuthService {
   }
 
   logout(): void {
-    this.http.post(this.apiUrl.build('/auth/logout'), {}, { withCredentials: true })
-      .subscribe(() => this.document.location.href = '/');
+    const form = this.document.createElement('form');
+    form.method = 'POST';
+    form.action = this.apiUrl.build('/auth/logout');
+    form.style.display = 'none';
+    this.document.body.appendChild(form);
+    form.submit();
   }
 
 }
