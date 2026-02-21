@@ -1,7 +1,8 @@
 import { Component, inject } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from '../../core/auth/auth.service';
 import { AuthStore } from '../../core/auth/auth.store';
+import { SessionInitializerService } from '../../core/auth/session-initializer.service';
 
 @Component({
   standalone: true,
@@ -27,14 +28,38 @@ export class LoginPageComponent {
   private readonly authStore = inject(AuthStore);
   private readonly authService = inject(AuthService);
   private readonly router = inject(Router);
+  private readonly route = inject(ActivatedRoute);
+  private readonly sessionInitializer = inject(SessionInitializerService);
 
   constructor() {
-    if (this.authStore.isAuthenticated()) {
-      void this.router.navigate(['/app/dashboard']);
-    }
+    void this.redirectAuthenticatedUser();
   }
 
   login(): void {
-    this.authService.login();
+    const returnUrl = this.getSafeReturnUrl() ?? '/app/dashboard';
+    this.authService.login(returnUrl);
+  }
+
+  private async redirectAuthenticatedUser(): Promise<void> {
+    await this.sessionInitializer.ensureInitialized();
+
+    if (this.authStore.isAuthenticated()) {
+      const returnUrl = this.getSafeReturnUrl() ?? '/app/dashboard';
+      void this.router.navigateByUrl(returnUrl);
+    }
+  }
+
+  private getSafeReturnUrl(): string | null {
+    const returnUrl = this.route.snapshot.queryParamMap.get('returnUrl');
+
+    if (!returnUrl || !returnUrl.startsWith('/')) {
+      return null;
+    }
+
+    if (returnUrl.startsWith('/auth/login')) {
+      return null;
+    }
+
+    return returnUrl;
   }
 }

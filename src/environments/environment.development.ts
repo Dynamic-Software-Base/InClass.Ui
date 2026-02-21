@@ -1,4 +1,4 @@
 export const environment = {
   production: false,
-  bffBaseUrl: 'http://localhost:5181'
+  bffBaseUrl: 'http://localhost:8081'
 };

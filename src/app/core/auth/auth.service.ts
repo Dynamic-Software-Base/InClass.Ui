@@ -33,10 +33,13 @@ export class AuthService {
     );
   }
 
-  login(): void {
-    const returnUrl = this.document.location.href;
+  login(returnUrl?: string): void {
+    const resolvedReturnUrl = returnUrl
+      ? new URL(returnUrl, this.document.location.origin).toString()
+      : this.document.location.href;
+
     this.document.location.href =
-      this.apiUrl.build(`/auth/login?returnUrl=${encodeURIComponent(returnUrl)}`);
+      this.apiUrl.build(`/auth/login?returnUrl=${encodeURIComponent(resolvedReturnUrl)}`);
   }
 
   logout(): void {
