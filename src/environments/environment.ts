@@ -1,4 +1,4 @@
 export const environment = {
   production: true,
-  apiBaseUrl: ''  // empty = same origin
+  bffBaseUrl: ''  // empty = same origin
 };
