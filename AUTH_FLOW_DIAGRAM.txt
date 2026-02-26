@@ -1,0 +1,151 @@
+InClassUi Angular Runtime/Auth Flow (Text Diagram)
+==================================================
+
+1) App Startup (index.html -> Angular bootstrap -> router)
+-----------------------------------------------------------
+
+Browser
+  |
+  | GET /
+  v
+src/index.html
+  - Contains <app-root>
+  - Shows #bootstrap-loader overlay
+  |
+  v
+src/main.ts
+  - bootstrapApplication(App, appConfig)
+  - waits minimum loader time, removes #bootstrap-loader
+  |
+  v
+src/app/app.config.ts
+  - provideRouter(routes)
+  - provideHttpClient(withInterceptors([credentialsInterceptor]))
+  |
+  v
+src/app/app.ts + src/app/app.html
+  - root component
+  - <router-outlet> renders current route component
+
+
+2) Routing Layout (public vs protected)
+---------------------------------------
+
+src/app/app.routes.ts
+
+Public:
+  "/"                   -> LandingPageComponent
+  "/auth/login"         -> LoginPageComponent
+  "/invitation/:token"  -> InvitationPageComponent
+  "/login"              -> redirect to "/auth/login"
+
+Protected shell:
+  "/app" (AppShellLayoutComponent)
+    canActivate: [authGuard]
+    canActivateChild: [authGuard]
+    children:
+      "/app/dashboard"  -> DashboardPageComponent
+      "/app/members"    -> MembersPageComponent
+
+Fallback:
+  "**" -> redirect to "/"
+
+
+3) Auth State Initialization (guard path)
+-----------------------------------------
+
+User navigates to /app/dashboard (or any /app/*)
+  |
+  v
+authGuard (core/guards/auth.guard.ts)
+  |
+  v
+SessionInitializerService.ensureInitialized()
+  |
+  v
+initialize():
+  authStore.setLoading()
+  try authService.me() -> GET /auth/me
+    success -> authStore.setAuthenticated(user)
+              try schoolsService.getMySchools()
+              schoolContextStore.setSchools(...)
+              (or clear on schools failure)
+    failure -> authStore.setAnonymous()
+              schoolContextStore.clear()
+  |
+  v
+authGuard checks authStore.isAuthenticated()
+  |
+  +--> true  -> allow route activation
+  |
+  +--> false -> redirect UrlTree:
+               /auth/login?returnUrl=<original-url>
+
+
+4) Login Flow (BFF/cookie based)
+--------------------------------
+
+LoginPageComponent (features/auth/login.page.ts)
+  |
+  | constructor -> redirectAuthenticatedUser()
+  |   ensureInitialized()
+  |   if already authenticated -> navigateByUrl(safeReturnUrl or /app/dashboard)
+  |
+  | click "Continue with InClass"
+  v
+AuthService.login(returnUrl)
+  |
+  v
+Full-page redirect to:
+  <bffBaseUrl>/auth/login?returnUrl=<absolute-url>
+  |
+  v
+Identity provider + BFF complete login, set auth cookie/session
+  |
+  v
+Browser returns to returnUrl
+  |
+  v
+Guard/session init runs again -> /auth/me now succeeds -> user enters /app/*
+
+
+5) API Request Auth Behavior
+----------------------------
+
+credentialsInterceptor (core/http/credentials.interceptor.ts)
+  - Adds withCredentials: true to outgoing HTTP calls
+  - Adds JSON Content-Type for write methods when appropriate
+  - On 401:
+      if request is NOT /auth/me
+      and current route is NOT /auth/login
+      -> router.navigate('/auth/login', { returnUrl: currentRoute })
+
+
+6) Logout Flow
+--------------
+
+User clicks Logout in AppShellLayoutComponent
+  |
+  v
+AuthService.logout()
+  - creates hidden form
+  - POST to <bffBaseUrl>/auth/logout
+  |
+  v
+Server clears session/cookie
+  |
+  v
+Next protected navigation triggers guard -> redirected to /auth/login
+
+
+7) Config Notes
+---------------
+
+API base URL:
+  - prod: src/environments/environment.ts
+  - dev : src/environments/environment.development.ts
+  - consumed by ApiUrlBuilder (core/http/api-url.builder.ts)
+
+SPA hosting rewrite:
+  - public/staticwebapp.config.json rewrites unknown routes to /index.html
+    so deep links like /app/members and /invitation/:token work in browser refresh.
