@@ -49,8 +49,6 @@ export const routes: Routes = [
   },
   {
     path: 'dashboard',
-    canActivate: [authGuard],
-    canActivateChild: [authGuard],
     children: tailadminRoutes
   },
   {
