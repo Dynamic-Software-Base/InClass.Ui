@@ -8,7 +8,7 @@ on:
 jobs:
   build_and_push:
     runs-on: ubuntu-latest
-    name: Build Angular and Update BFF wwwroot
+    name: Build Angular and Update BFF src/InClassBff.Api/wwwroot
 
     steps:
       - uses: actions/checkout@v3
@@ -34,11 +34,11 @@ jobs:
           token: ${{ secrets.BFF_REPO_TOKEN }}
           path: bff-repo
 
-      - name: Clear old wwwroot and copy new Angular build
+      - name: Clear old src/InClassBff.Api/wwwroot and copy new Angular build
         run: |
-          rm -rf bff-repo/wwwroot/*
-          mkdir -p bff-repo/wwwroot
-          cp -r dist/InClassUi/browser/. bff-repo/wwwroot/
+          rm -rf bff-repo/src/InClassBff.Api/wwwroot/*
+          mkdir -p bff-repo/src/InClassBff.Api/wwwroot
+          cp -r dist/InClassUi/browser/. bff-repo/src/InClassBff.Api/wwwroot/
           # ↑ adjust dist/InClassUi/browser to your actual Angular outputPath in angular.json
 
       - name: Commit and push to BFF repo
@@ -46,9 +46,10 @@ jobs:
           cd bff-repo
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add wwwroot/
+          git add src/InClassBff.Api/wwwroot/
           # Only commit if something actually changed
-          git diff --staged --quiet && echo "No changes to wwwroot, skipping push." || (
+          git diff --staged --quiet && echo "No changes to src/InClassBff.Api/wwwroot, skipping push." || (
             git commit -m "chore: update Angular build [angular commit: ${{ github.sha }}]"
             git push
           )
+
