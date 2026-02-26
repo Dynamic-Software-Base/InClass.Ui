@@ -6,6 +6,7 @@ import { MembersPageComponent } from './features/members/members.page';
 import { InvitationPageComponent } from './features/invitation/invitation.page';
 import { AppShellLayoutComponent } from './features/layout/app-shell-layout.component';
 import { LandingPageComponent } from './features/landing/landing.page';
+import { tailadminRoutes } from './tailadmin/tailadmin.routes';
 
 export const routes: Routes = [
   {
@@ -45,6 +46,12 @@ export const routes: Routes = [
         component: MembersPageComponent
       }
     ]
+  },
+  {
+    path: 'dashboard',
+    canActivate: [authGuard],
+    canActivateChild: [authGuard],
+    children: tailadminRoutes
   },
   {
     path: '**',
